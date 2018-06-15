@@ -56,6 +56,13 @@ class CameraComponent extends Component {
       Image: {
         Bytes: getBinary(base64Image)
       },
+      // TargetImage: {
+      //   S3Object: {
+      //     Bucket: "facerdb",
+      //     Name: "jayprofile.jpg"
+      //   }
+      // },
+      // SimilarityThreshold: 95
       Attributes: ["ALL"]
     };
 
@@ -79,8 +86,12 @@ class CameraComponent extends Component {
                   backgroundColor: "black"
                 }}
               >
-                <Webcam ref={this.setRef} screenshotFormat="image/jpeg" />
-                {/* <h1 style={{ color: "white" }}>This is for pictures</h1> */}
+                <Webcam
+                  ref={this.setRef}
+                  screenshotFormat="image/jpeg"
+                  height="480"
+                  width="710"
+                />
               </Container>
             </Grid.Column>
             <Grid.Column style={{ padding: "0 15px 0 5px" }}>
