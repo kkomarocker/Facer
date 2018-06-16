@@ -13,16 +13,26 @@ AWS.config.update({
 });
 
 const rekognition = new AWS.Rekognition({ apiVersion: "2016-06-27" });
+const s3 = new AWS.S3();
 
 class CameraComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { pictures: "", logInStatus: "", data: {}, detectedData: {} };
+    this.state = {
+      pictures: "",
+      logInStatus: null,
+      data: {},
+      detectedData: {},
+      captured: false,
+      registered: false
+    };
 
     this.onCapture = this.onCapture.bind(this);
     this.result = this.result.bind(this);
     this.funFacts = this.funFacts.bind(this);
+    this.register = this.register.bind(this);
+    // this.detailFacts = this.detailFacts.bind(this);
   }
 
   setRef = webcam => {
@@ -33,7 +43,8 @@ class CameraComponent extends Component {
     this.setState({
       // returns base64 encoded data of captured image and sets state.
       // ex. data:image/jpeg;base64,/9skQ2jsd...
-      pictures: this.webcam.getScreenshot()
+      pictures: this.webcam.getScreenshot(),
+      captured: true
     });
   };
 
@@ -69,11 +80,16 @@ class CameraComponent extends Component {
     };
 
     rekognition.compareFaces(params, (err, data) => {
-      if (err) console.log(err.stack);
-      this.setState({
-        data,
-        logInStatus: "Successfully logged-in"
-      });
+      if (err) {
+        this.setState({
+          logInStatus: false
+        });
+      } else {
+        this.setState({
+          data,
+          logInStatus: true
+        });
+      }
     });
   };
 
@@ -109,6 +125,63 @@ class CameraComponent extends Component {
     });
   }
 
+  register() {
+    const getBinary = base64Image => {
+      const binaryImg = atob(base64Image);
+      const length = binaryImg.length;
+      const ab = new ArrayBuffer(length);
+      const ua = new Uint8Array(ab);
+      for (let i = 0; i < length; i++) {
+        ua[i] = binaryImg.charCodeAt(i);
+      }
+
+      return ab;
+    };
+
+    const base64Image = this.state.pictures.replace(
+      /^data:image\/(png|jpeg|jpg);base64,/,
+      ""
+    );
+
+    const params = {
+      Body: getBinary(base64Image),
+      Bucket: "facerdb",
+      Key: this.props.name.toLowerCase() + "profile.jpg"
+    };
+
+    s3.putObject(params, (err, data) => {
+      if (err) console.log(err, err.stack);
+      this.setState({
+        registered: true
+      });
+    });
+  }
+
+  // detailFacts() {
+  //   const emotionalStatus = this.state.detectedData.FaceDetails[0].Emotions[0]
+  //     .Type;
+  //   const isSmilingValue = this.state.detectedData.FaceDetails[0].Smile.Value;
+  //   const topEmotionScore = Math.round(
+  //     this.state.detectedData[0].FaceDetails.Emotions[0].Confidence
+  //   );
+
+  //   let smile = "";
+  //   const allKeys = Object.keys(this.state.detectedData.FaceDetails[0]);
+
+  //   allKeys.forEach(key => {
+  //     if (key === "Smile") {
+  //       smile = key;
+  //     }
+  //   });
+
+  //   const detail = [
+  //     { text: emotionalStatus, value: emotionalStatus },
+  //     { text: smile, value: smile }
+  //   ];
+
+  //   return detail;
+  // }
+
   render() {
     return (
       <div>
@@ -118,9 +191,8 @@ class CameraComponent extends Component {
               <Container
                 textAlign="center"
                 style={{
-                  height: "70vh",
-                  width: "50vw",
-                  backgroundColor: "black"
+                  height: "50vh",
+                  width: "50vw"
                 }}
               >
                 <Webcam
@@ -141,7 +213,12 @@ class CameraComponent extends Component {
                   padding: "10px 15px 0 5px"
                 }}
               >
-                <Pictures {...this.state} name={this.props.name} />
+                <Pictures
+                  {...this.state}
+                  name={this.props.name}
+                  // details={this.detailFacts}
+                  register={this.register}
+                />
               </Container>
             </Grid.Column>
           </Grid.Row>
