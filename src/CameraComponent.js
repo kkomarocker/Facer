@@ -25,14 +25,16 @@ class CameraComponent extends Component {
       data: {},
       detectedData: {},
       captured: false,
-      registered: false
+      registered: false,
+      emotional: null,
+      eyeglasses: null,
+      smile: null
     };
 
     this.onCapture = this.onCapture.bind(this);
     this.result = this.result.bind(this);
     this.funFacts = this.funFacts.bind(this);
     this.register = this.register.bind(this);
-    // this.detailFacts = this.detailFacts.bind(this);
   }
 
   setRef = webcam => {
@@ -157,31 +159,6 @@ class CameraComponent extends Component {
     });
   }
 
-  // detailFacts() {
-  //   const emotionalStatus = this.state.detectedData.FaceDetails[0].Emotions[0]
-  //     .Type;
-  //   const isSmilingValue = this.state.detectedData.FaceDetails[0].Smile.Value;
-  //   const topEmotionScore = Math.round(
-  //     this.state.detectedData[0].FaceDetails.Emotions[0].Confidence
-  //   );
-
-  //   let smile = "";
-  //   const allKeys = Object.keys(this.state.detectedData.FaceDetails[0]);
-
-  //   allKeys.forEach(key => {
-  //     if (key === "Smile") {
-  //       smile = key;
-  //     }
-  //   });
-
-  //   const detail = [
-  //     { text: emotionalStatus, value: emotionalStatus },
-  //     { text: smile, value: smile }
-  //   ];
-
-  //   return detail;
-  // }
-
   render() {
     return (
       <div>
@@ -216,7 +193,6 @@ class CameraComponent extends Component {
                 <Pictures
                   {...this.state}
                   name={this.props.name}
-                  // details={this.detailFacts}
                   register={this.register}
                 />
               </Container>
@@ -252,7 +228,7 @@ class CameraComponent extends Component {
                 <Button
                   size="massive"
                   color="blue"
-                  content="Fun Facts"
+                  content="Wanna have some fun?"
                   onClick={this.funFacts}
                   fluid
                 />

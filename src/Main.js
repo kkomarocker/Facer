@@ -33,7 +33,7 @@ class Main extends Component {
                         color: "white"
                       }}
                     >
-                      FS FaceMatch 3.0
+                      FaceMatch
                     </Header>
                   </div>
                 </Container>
