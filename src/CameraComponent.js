@@ -43,10 +43,10 @@ class CameraComponent extends Component {
     this.webcam = webcam;
   };
 
+  // Returns base64 encoded data of captured image and sets state.
+  // ex. data:image/jpeg;base64,/9skQ2jsd...
   onCapture = () => {
     this.setState({
-      // returns base64 encoded data of captured image and sets state.
-      // ex. data:image/jpeg;base64,/9skQ2jsd...
       pictures: this.webcam.getScreenshot(),
       captured: true
     });
