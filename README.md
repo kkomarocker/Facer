@@ -12,4 +12,4 @@ To use this app, please follow the instruction below.
   };
 ```
 
-* import above creds to CameraComponent.js
+* Import above creds to CameraComponent.js
