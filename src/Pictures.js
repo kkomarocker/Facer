@@ -4,84 +4,139 @@ import {
   Container,
   Card,
   Button,
-  Segment,
   Image,
   Header
 } from "semantic-ui-react";
 
 const Pictures = props => {
-  if (props.captured && !props.logInStatus) {
-    if (props.registered) {
-      return (
-        <Header size="huge" style={{ padding: "28px 0 0 10px" }}>
-          You are registered! Please log-in again!
+  console.log(props);
+  if (props.registered) {
+    return (
+      <Header size="huge" style={{ color: "white", padding: "28px 0 0 10px" }}>
+        You are registered! Please log-in again!
+      </Header>
+    );
+  }
+
+  if (props.captured) {
+    return (
+      <div>
+        <Header
+          size="huge"
+          style={{
+            fontSize: "3.5em",
+            color: "white",
+            padding: "28px 0 0 10px"
+          }}
+        >
+          Picture has captured.<br />Please press Log-In or Register
         </Header>
-      );
-    } else {
-      return (
-        <div>
-          <Header size="huge" style={{ padding: "28px 0 0 10px" }}>
-            Picture has captured.<br />Please press Log-In or Register
-          </Header>
-          <Container>
-            <Button
-              size="massive"
-              color="blue"
-              content="Register"
-              onClick={() => props.register()}
-            />
-          </Container>
-        </div>
-      );
-    }
+        <Container>
+          <Button
+            size="massive"
+            color="red"
+            content="Register"
+            onClick={() => props.register()}
+          />
+        </Container>
+      </div>
+    );
+  }
+
+  if (props.err) {
+    return (
+      <div>
+        <Header
+          size="huge"
+          style={{
+            fontSize: "3.5em",
+            color: "white",
+            padding: "28px 0 0 10px"
+          }}
+        >
+          User not Valid.<br />Please register
+        </Header>
+        <Container>
+          <Button
+            size="massive"
+            color="red"
+            content="Register"
+            onClick={() => props.register()}
+          />
+        </Container>
+      </div>
+    );
   }
 
   return (
     <div>
-      {props.logInStatus && props.data !== {} ? (
-        <div>
-          <Grid divided="vertically">
+      <div>
+        {props.logInStatus && props.data.FaceMatches[0].Similarity > 95 ? (
+          <Grid>
             <Grid.Row>
-              <Grid.Column
-                style={{ backgroundColor: "white", padding: "28px 0 0 10px" }}
-              >
-                <Card centered={true} fluid>
+              <Grid.Column style={{ padding: "28px 0 0 10px" }}>
+                <Card
+                  centered={true}
+                  style={{ height: "410px", width: "480px" }}
+                >
                   <Image
                     alt={props.name}
                     src={props.pictures}
-                    size="large"
                     centered={true}
                   />
                   <Card.Content>
-                    <Card.Header>{props.name}</Card.Header>
-                    <Card.Description>
-                      You are logged into LearnDot!
+                    <Card.Header style={{ fontSize: "1.7em" }}>
+                      {props.name}
+                    </Card.Header>
+                    <Card.Description style={{ fontSize: "1.3em" }}>
+                      Student @ Fullstack Academy
                     </Card.Description>
-                    <Card.Description>Have a great day!</Card.Description>
+                    <Card.Description style={{ fontSize: "1.3em" }}>
+                      Similarity Score: {props.data.FaceMatches[0].Similarity}
+                    </Card.Description>
                   </Card.Content>
                 </Card>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </div>
-      ) : null}
+        ) : (
+          <div>
+            <Header
+              size="huge"
+              style={{
+                fontSize: "3.5em",
+                color: "white",
+                padding: "28px 0 0 10px"
+              }}
+            >
+              Picture has not captured yet<br />Please take a snapshot!
+            </Header>
+          </div>
+        )}
+      </div>
       <div>
         {props.detectedData.FaceDetails ? (
           <Grid divided="vertically">
             <Container>
-              <Segment>
-                <Header size="large" content="Analyzed Result" />
-              </Segment>
+              <Header
+                style={{
+                  fontSize: "2.5em",
+                  textAlign: "center",
+                  paddingTop: "15px",
+                  color: "white"
+                }}
+                content="Analyzed Result"
+              />
             </Container>
-            <Grid.Row columns={3}>
+            <Grid.Row columns={4}>
               <Grid.Column>
                 <Container>
                   <Card>
                     <Card.Content>
-                      <Card.Header>Emotional Status</Card.Header>
-                      <Card.Description>
+                      <Card.Header as="h1">
+                        Emotional Status:{" "}
                         {props.detectedData.FaceDetails[0].Emotions[0].Type}
-                      </Card.Description>
+                      </Card.Header>
                     </Card.Content>
                   </Card>
                 </Container>
@@ -90,12 +145,12 @@ const Pictures = props => {
                 <Container>
                   <Card>
                     <Card.Content>
-                      <Card.Header>Has Eyeglasses?</Card.Header>
-                      <Card.Description>
+                      <Card.Header as="h1">
+                        Has Eyeglasses:{" "}
                         {props.detectedData.FaceDetails[0].Eyeglasses.Value
                           ? "Yes"
                           : "No"}
-                      </Card.Description>
+                      </Card.Header>
                     </Card.Content>
                   </Card>
                 </Container>
@@ -104,12 +159,25 @@ const Pictures = props => {
                 <Container>
                   <Card>
                     <Card.Content>
-                      <Card.Header>Smiled?</Card.Header>
-                      <Card.Description>
+                      <Card.Header as="h1">
+                        Age Range:
+                        {props.detectedData.FaceDetails[0].AgeRange.Low}-
+                        {props.detectedData.FaceDetails[0].AgeRange.High}
+                      </Card.Header>
+                    </Card.Content>
+                  </Card>
+                </Container>
+              </Grid.Column>
+              <Grid.Column>
+                <Container>
+                  <Card>
+                    <Card.Content>
+                      <Card.Header as="h1">
+                        Smiled:{" "}
                         {props.detectedData.FaceDetails[0].Smile.Value
                           ? "Yes"
                           : "No"}
-                      </Card.Description>
+                      </Card.Header>
                     </Card.Content>
                   </Card>
                 </Container>
@@ -118,7 +186,6 @@ const Pictures = props => {
           </Grid>
         ) : null}
       </div>
-      <div />
     </div>
   );
 };

@@ -20,8 +20,9 @@ class CameraComponent extends Component {
     super(props);
 
     this.state = {
+      err: null,
       pictures: "",
-      logInStatus: null,
+      logInStatus: false,
       data: {},
       detectedData: {},
       captured: false,
@@ -35,6 +36,7 @@ class CameraComponent extends Component {
     this.result = this.result.bind(this);
     this.funFacts = this.funFacts.bind(this);
     this.register = this.register.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   setRef = webcam => {
@@ -50,6 +52,7 @@ class CameraComponent extends Component {
     });
   };
 
+  // Returns comparison result from AWS Rekognition and sets state accordingly.
   result = () => {
     const getBinary = base64Image => {
       const binaryImg = atob(base64Image);
@@ -84,17 +87,21 @@ class CameraComponent extends Component {
     rekognition.compareFaces(params, (err, data) => {
       if (err) {
         this.setState({
-          logInStatus: false
+          err,
+          logInStatus: false,
+          captured: false
         });
       } else {
         this.setState({
           data,
-          logInStatus: true
+          logInStatus: true,
+          captured: false
         });
       }
     });
   };
 
+  // Returns data object containing details of face detected from image.
   funFacts() {
     const getBinary = base64Image => {
       const binaryImg = atob(base64Image);
@@ -127,6 +134,7 @@ class CameraComponent extends Component {
     });
   }
 
+  // Stores image to AWS S3 bucket
   register() {
     const getBinary = base64Image => {
       const binaryImg = atob(base64Image);
@@ -159,9 +167,24 @@ class CameraComponent extends Component {
     });
   }
 
+  reset() {
+    this.setState({
+      err: null,
+      pictures: "",
+      logInStatus: false,
+      data: {},
+      detectedData: {},
+      captured: false,
+      registered: false,
+      emotional: null,
+      eyeglasses: null,
+      smile: null
+    });
+  }
+
   render() {
     return (
-      <div>
+      <div style={{ backgroundColor: "#3170E5" }}>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Grid.Column style={{ padding: "10px 5px 0 15px" }}>
@@ -186,7 +209,6 @@ class CameraComponent extends Component {
                 style={{
                   height: "70vh",
                   width: "50vw",
-                  backgroundColor: "white",
                   padding: "10px 15px 0 5px"
                 }}
               >
@@ -200,20 +222,20 @@ class CameraComponent extends Component {
           </Grid.Row>
         </Grid>
         <Grid>
-          <Grid.Row columns={3}>
+          <Grid.Row columns={4}>
             <Grid.Column style={{ padding: "0 5px 0 15px" }}>
-              <Container style={{ textAlign: "left" }}>
+              <Container style={{ textAlign: "center" }}>
                 <Button
                   size="massive"
-                  fluid
-                  color="blue"
+                  color="yellow"
                   content="Capture"
                   onClick={this.onCapture}
+                  fluid
                 />
               </Container>
             </Grid.Column>
             <Grid.Column style={{ padding: "0 5px 0 5px" }}>
-              <Container style={{ textAlign: "right" }}>
+              <Container style={{ textAlign: "center" }}>
                 <Button
                   size="massive"
                   color="red"
@@ -224,12 +246,23 @@ class CameraComponent extends Component {
               </Container>
             </Grid.Column>
             <Grid.Column style={{ padding: "0 15px 0 5px" }}>
-              <Container style={{ textAlign: "right" }}>
+              <Container style={{ textAlign: "center" }}>
                 <Button
                   size="massive"
-                  color="blue"
-                  content="Wanna have some fun?"
+                  color="yellow"
+                  content="Start Analyzation"
                   onClick={this.funFacts}
+                  fluid
+                />
+              </Container>
+            </Grid.Column>
+            <Grid.Column style={{ padding: "0 15px 0 5px" }}>
+              <Container style={{ textAlign: "center" }}>
+                <Button
+                  size="massive"
+                  color="red"
+                  content="Reset"
+                  onClick={this.reset}
                   fluid
                 />
               </Container>

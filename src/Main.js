@@ -22,15 +22,15 @@ class Main extends Component {
     return (
       <div>
         <div>
-          <Grid divided="vertically" style={{ backgroundColor: "#3170E5" }}>
+          <Grid divided="vertically">
             <Grid.Row columns={2}>
               <Grid.Column>
                 <Container fluid>
                   <div style={{ padding: "25px 5px 0 15px" }}>
                     <Header
                       style={{
-                        fontSize: "3.5em",
-                        color: "white"
+                        fontSize: "6.5em",
+                        color: "black"
                       }}
                     >
                       FaceMatch
@@ -46,11 +46,10 @@ class Main extends Component {
                 <Container>
                   <div style={{ padding: "25px 15px 0 5px" }}>
                     <Input
-                      fluid
-                      size="massive"
-                      placeholder="Type your first name and press capture"
+                      placeholder="Enter your first name"
                       value={this.state.name}
                       onChange={this.changeHandler}
+                      style={{ height: "100px", fontSize: "3.5em" }}
                     />
                   </div>
                 </Container>
@@ -60,7 +59,7 @@ class Main extends Component {
         </div>
         <div>
           <CameraComponent
-            style={{ border: "0 0 20px 0" }}
+            style={{ backgroundColor: "#3170E5", border: "0 0 20px 0" }}
             name={this.state.name}
           />
         </div>
