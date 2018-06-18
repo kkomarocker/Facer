@@ -180,6 +180,7 @@ class CameraComponent extends Component {
       eyeglasses: null,
       smile: null
     });
+    this.props.resetName();
   }
 
   render() {

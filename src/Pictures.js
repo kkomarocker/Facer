@@ -81,8 +81,9 @@ const Pictures = props => {
                 >
                   <Image
                     alt={props.name}
-                    src={props.pictures}
+                    src={`https://s3.amazonaws.com/facerdb/${props.name.toLowerCase()}profile.jpg`}
                     centered={true}
+                    style={{ height: "320px", width: "240px" }}
                   />
                   <Card.Content>
                     <Card.Header style={{ fontSize: "1.7em" }}>

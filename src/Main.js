@@ -11,6 +11,7 @@ class Main extends Component {
     };
 
     this.changeHandler = this.changeHandler.bind(this);
+    this.blankName = this.blankName.bind(this);
   }
 
   changeHandler(event) {
@@ -18,6 +19,13 @@ class Main extends Component {
       name: event.target.value
     });
   }
+
+  blankName() {
+    this.setState({
+      name: ""
+    });
+  }
+
   render() {
     return (
       <div>
@@ -61,6 +69,7 @@ class Main extends Component {
           <CameraComponent
             style={{ backgroundColor: "#3170E5", border: "0 0 20px 0" }}
             name={this.state.name}
+            resetName={this.blankName}
           />
         </div>
       </div>
