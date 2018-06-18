@@ -9,11 +9,13 @@ import {
 } from "semantic-ui-react";
 
 const Pictures = props => {
-  console.log(props);
   if (props.registered) {
     return (
-      <Header size="huge" style={{ color: "white", padding: "28px 0 0 10px" }}>
-        You are registered! Please log-in again!
+      <Header
+        size="huge"
+        style={{ fontSize: "3.5em", color: "white", padding: "28px 0 0 10px" }}
+      >
+        You are registered! <br />Press Reset and Log-in again!
       </Header>
     );
   }
@@ -91,9 +93,6 @@ const Pictures = props => {
                     </Card.Header>
                     <Card.Description style={{ fontSize: "1.3em" }}>
                       Student @ Fullstack Academy
-                    </Card.Description>
-                    <Card.Description style={{ fontSize: "1.3em" }}>
-                      Similarity Score: {props.data.FaceMatches[0].Similarity}
                     </Card.Description>
                   </Card.Content>
                 </Card>
@@ -185,7 +184,20 @@ const Pictures = props => {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        ) : null}
+        ) : null
+        // <div>
+        //   <Header
+        //     size="huge"
+        //     style={{
+        //       fontSize: "3.5em",
+        //       color: "white",
+        //       padding: "28px 0 0 10px"
+        //     }}
+        //   >
+        //     Picture has not captured yet<br />Please take a snapshot!
+        //   </Header>
+        // </div>
+        }
       </div>
     </div>
   );
