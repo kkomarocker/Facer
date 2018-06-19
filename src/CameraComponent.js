@@ -192,7 +192,7 @@ class CameraComponent extends Component {
               <Container
                 textAlign="center"
                 style={{
-                  height: "50vh",
+                  height: "70vh",
                   width: "50vw"
                 }}
               >

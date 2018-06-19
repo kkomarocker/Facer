@@ -74,59 +74,35 @@ const Pictures = props => {
   return (
     <div>
       <div>
-        {props.logInStatus && !props.data.UnmatchedFaces.length ? (
-          !props.data.UnmatchedFaces.length &&
-          props.data.FaceMatches[0].Similarity > 95 ? (
-            <Grid>
-              <Grid.Row>
-                <Grid.Column style={{ padding: "28px 0 0 10px" }}>
-                  <Card
+        {props.logInStatus && props.data.FaceMatches[0].Similarity > 95 ? (
+          <Grid>
+            <Grid.Row>
+              <Grid.Column style={{ padding: "28px 0 0 10px" }}>
+                <Card
+                  centered={true}
+                  style={{ height: "415px", width: "350px" }}
+                >
+                  <Image
+                    alt={props.name}
+                    src={`https://s3.amazonaws.com/facerdb/${props.name.toLowerCase()}profile.jpg`}
                     centered={true}
-                    style={{ height: "415px", width: "350px" }}
-                  >
-                    <Image
-                      alt={props.name}
-                      src={`https://s3.amazonaws.com/facerdb/${props.name.toLowerCase()}profile.jpg`}
-                      centered={true}
-                      style={{ height: "320px", width: "240px" }}
-                    />
-                    <Card.Content>
-                      <Card.Header style={{ fontSize: "1.7em" }}>
-                        {props.name}
-                      </Card.Header>
-                      <Card.Description style={{ fontSize: "1.3em" }}>
-                        Student @ Fullstack Academy
-                      </Card.Description>
-                      <Card.Description style={{ fontSize: "1.3em" }}>
-                        Similarity Score: {props.data.FaceMatches[0].Similarity}
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          ) : (
-            <div>
-              <Header
-                size="huge"
-                style={{
-                  fontSize: "3.5em",
-                  color: "white",
-                  padding: "28px 0 0 10px"
-                }}
-              >
-                User not Valid.<br />Please register
-              </Header>
-              <Container>
-                <Button
-                  size="massive"
-                  color="red"
-                  content="Register"
-                  onClick={() => props.register()}
-                />
-              </Container>
-            </div>
-          )
+                    style={{ height: "320px", width: "240px" }}
+                  />
+                  <Card.Content>
+                    <Card.Header style={{ fontSize: "1.7em" }}>
+                      {props.name}
+                    </Card.Header>
+                    <Card.Description style={{ fontSize: "1.3em" }}>
+                      Student @ Fullstack Academy
+                    </Card.Description>
+                    <Card.Description style={{ fontSize: "1.3em" }}>
+                      Similarity Score: {props.data.FaceMatches[0].Similarity}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         ) : (
           <div>
             <Header
