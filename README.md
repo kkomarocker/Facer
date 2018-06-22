@@ -15,5 +15,5 @@ To use this app, please follow the instruction below.
 * Import above creds to CameraComponent.js
 
 
-##TODO
+#TODO
 * Fix rendering issue when user accidentally presses log-in button without first name.
