@@ -1,9 +1,12 @@
 ## Welcome to Facer
+
+This simple log-in application will validate user based on captured facial image and stored image comparison.
+
 To use this app, please follow the instruction below.
 
-* Create AWS account and obtain access key ID / secret access key. 
-* Download AWS SDK (npm i --save aws-sdk).
-* `touch secret.js` and copy / paste below code;
+- Create AWS account and obtain access key ID / secret access key.
+- Download AWS SDK (npm i --save aws-sdk).
+- `touch secret.js` and copy / paste below code;
 
 ```sh
   export const creds = {
@@ -12,4 +15,4 @@ To use this app, please follow the instruction below.
   };
 ```
 
-* Import above creds to CameraComponent.js
+- Import above creds to CameraComponent.js
