@@ -9,14 +9,14 @@ import {
 } from "semantic-ui-react";
 
 const Pictures = props => {
-  console.log(props);
   if (props.registered) {
     return (
       <Header
         size="huge"
         style={{ fontSize: "3.5em", color: "white", padding: "28px 0 0 10px" }}
       >
-        You are registered! <br />Press Reset and Log-in again!
+        You are registered! <br />
+        Press Reset and Log-in again!
       </Header>
     );
   }
@@ -32,7 +32,9 @@ const Pictures = props => {
             padding: "28px 0 0 10px"
           }}
         >
-          Picture has captured.<br />Please press Log-In or Register
+          Picture has captured.
+          <br />
+          Please press Log-In or Register
         </Header>
         <Container>
           <Button
@@ -57,7 +59,9 @@ const Pictures = props => {
             padding: "28px 0 0 10px"
           }}
         >
-          User not Valid.<br />Please register
+          User not Valid.
+          <br />
+          Please register
         </Header>
         <Container>
           <Button
@@ -113,7 +117,9 @@ const Pictures = props => {
                 padding: "28px 0 0 10px"
               }}
             >
-              Picture has not captured yet<br />Please take a snapshot!
+              Picture has not captured yet
+              <br />
+              Please take a snapshot!
             </Header>
           </div>
         )}

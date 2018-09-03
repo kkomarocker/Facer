@@ -3,7 +3,6 @@ import Webcam from "react-webcam";
 import { Grid, Container, Button } from "semantic-ui-react";
 import AWS from "aws-sdk";
 import { creds } from "./secret";
-
 import Pictures from "./Pictures";
 
 AWS.config.update({
@@ -50,7 +49,6 @@ class CameraComponent extends Component {
       pictures: this.webcam.getScreenshot(),
       captured: true
     });
-    console.log(this.state.pictures);
   };
 
   // Returns comparison result from AWS Rekognition and sets state accordingly.
@@ -63,7 +61,7 @@ class CameraComponent extends Component {
       for (let i = 0; i < length; i++) {
         ua[i] = binaryImg.charCodeAt(i);
       }
-      console.log(ab);
+
       return ab;
     };
 
