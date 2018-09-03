@@ -22,3 +22,4 @@ To use this app, please follow the instruction below.
 - Please take picture with plenty of light.
 - This app will work perfectly with full-frontal facial image only.
 - Smile.
+- Responsive design is under construction..
