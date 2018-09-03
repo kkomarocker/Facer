@@ -1,4 +1,4 @@
-### Welcome to Facer
+# Welcome to Facer
 
 ## This simple log-in application will validate user based on captured facial image and stored image comparison.
 
