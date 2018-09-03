@@ -1,6 +1,6 @@
 ## Welcome to Facer
 
-This simple log-in application will validate user based on captured facial image and stored image comparison.
+#This simple log-in application will validate user based on captured facial image and stored image comparison.
 
 To use this app, please follow the instruction below.
 
@@ -16,3 +16,9 @@ To use this app, please follow the instruction below.
 ```
 
 - Import above creds to CameraComponent.js
+
+#Few things to note...
+
+- Please take picture with plenty of light.
+- This app will work perfectly with full-frontal facial image only.
+- Smile.
